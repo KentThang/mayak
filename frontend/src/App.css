@@ -1,6 +1,7 @@
+@import 'tailwindcss';
+
 * {
 	margin: 0;
-	padding: 0;
 	box-sizing: border-box;
 }
 
@@ -85,6 +86,7 @@ body {
 h1 {
 	color: white;
 	mix-blend-mode: overlay;
+	font-size: 3rem;
 }
 
 p {
