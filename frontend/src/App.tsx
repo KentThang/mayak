@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import CalendarHeatmap from 'react-calendar-heatmap'
+import Searchbar from './components/Searchbar'
 
 interface DashboardData {
 	monkeytype: {
@@ -31,9 +32,10 @@ function App() {
 
 	return (
 		<div className="app">
-			<div className="dashboard min-h-screen flex flex-col pt-5 ps-10 relative">
-				<div className="header">
+			<div className="dashboard min-h-screen flex flex-col pt-5 ps-10 pe-10 relative">
+				<div id="header" className="flex flex-row gap-5">
 					<h1>mayak</h1>
+					<Searchbar />
 				</div>
 				<div className="pt-1 flex justify-center gap-2">
 					<div
