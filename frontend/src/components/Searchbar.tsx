@@ -2,22 +2,30 @@ import { useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { executeSearch } from '../utils/SearchbarUtils'
+import DictionaryResultBox from './DictionaryResultBox'
+import type { DictionaryResult } from '../types/dictionary'
 
 function Searchbar() {
+	const [result, setResult] = useState<DictionaryResult | null>(null)
 	const [show, setShow] = useState(false)
 	const [query, setQuery] = useState('')
 
-	const handleSearch = (e) => {
+	const handleSearch = async (e: { preventDefault: () => void }) => {
 		e.preventDefault()
 
-		executeSearch(query)
+		const data = await executeSearch(query)
+
+		if (data) {
+			setResult(data)
+			return
+		}
 
 		setShow(false)
 		setQuery('')
 	}
 
 	useEffect(() => {
-		const handleKeyDown = (e) => {
+		const handleKeyDown = (e: { key: string }) => {
 			if (e.key === 'Escape') {
 				setShow((prev) => !prev)
 				setQuery('')
@@ -49,6 +57,7 @@ function Searchbar() {
 			<Modal
 				className="border-radius-lg"
 				show={show}
+				size="lg"
 				onHide={handleClose}
 				keyboard={false} // To disable conflict with handleKeyDown
 			>
@@ -63,6 +72,8 @@ function Searchbar() {
 							onChange={(e) => setQuery(e.target.value)}
 						/>
 					</form>
+
+					{result && <DictionaryResultBox result={result} />}
 				</Modal.Body>
 			</Modal>
 		</>

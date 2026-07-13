@@ -14,7 +14,7 @@ body {
 	position: relative;
 	width: 100vw;
 	height: 100vh;
-	background-image: url("/src/assets/image.jpg")
+	background-image: url('/src/assets/image.jpg');
 }
 
 h1 {
@@ -25,4 +25,8 @@ h1 {
 
 p {
 	color: white;
+}
+
+.dictionary-box p {
+	color: black !important;
 }
