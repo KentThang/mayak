@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { executeSearch } from '../utils/SearchbarUtils'
 import DictionaryResultBox from './DictionaryResultBox'
@@ -7,6 +6,7 @@ import type { DictionaryResult } from '../types/dictionary'
 
 function Searchbar() {
 	const [result, setResult] = useState<DictionaryResult | null>(null)
+	const [resultMessage, setResultMessage] = useState<string>(null)
 	const [show, setShow] = useState(false)
 	const [query, setQuery] = useState('')
 
@@ -16,12 +16,17 @@ function Searchbar() {
 		const data = await executeSearch(query)
 
 		if (data) {
-			setResult(data)
+			if (data.def.length != 0) {
+				setResult(data)
+				setResultMessage(null)
+			} else {
+				setResult(null)
+				setResultMessage("No result found for '" + query + "'")
+			}
 			return
 		}
 
-		setShow(false)
-		setQuery('')
+		handleClose()
 	}
 
 	useEffect(() => {
@@ -29,6 +34,8 @@ function Searchbar() {
 			if (e.key === 'Escape') {
 				setShow((prev) => !prev)
 				setQuery('')
+				setResult(null)
+				setResultMessage(null)
 			}
 		}
 
@@ -42,22 +49,15 @@ function Searchbar() {
 	const handleClose = () => {
 		setShow(false)
 		setQuery('')
-	}
-	const handleShow = () => {
-		setShow(true)
-		setQuery('')
+		setResult(null)
+		setResultMessage(null)
 	}
 
 	return (
 		<>
-			<Button variant="outline-light" onClick={handleShow}>
-				search
-			</Button>
-
 			<Modal
 				className="border-radius-lg"
 				show={show}
-				size="lg"
 				onHide={handleClose}
 				keyboard={false} // To disable conflict with handleKeyDown
 			>
@@ -72,8 +72,17 @@ function Searchbar() {
 							onChange={(e) => setQuery(e.target.value)}
 						/>
 					</form>
-
-					{result && <DictionaryResultBox result={result} />}
+					<div
+						className={`results-container ${result || resultMessage ? 'show' : ''}`}
+					>
+						{result && <DictionaryResultBox result={result} />}
+						{resultMessage && (
+							<div>
+								<hr />
+								<p className="m-0">{resultMessage}</p>
+							</div>
+						)}
+					</div>
 				</Modal.Body>
 			</Modal>
 		</>

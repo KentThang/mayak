@@ -40,7 +40,7 @@ function App() {
 				<div className="pt-1 flex justify-center gap-2">
 					<div
 						id="main-panel"
-						className="w-7xl px-9 pb-2 pt-2 rounded-4xl backdrop-blur-lg"
+						className="main-panel w-7xl px-9 pb-2 pt-2 rounded-4xl backdrop-blur-lg"
 					>
 						<p className="text-3xl pb-2">Activity Calendar</p>
 						<div className="heatmap rounded-3xl">

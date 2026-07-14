@@ -12,4 +12,9 @@ interface Definition {
 interface Translation {
 	text: string
 	pos: string
+	mean: Meaning[]
+}
+
+interface Meaning {
+	text: string
 }

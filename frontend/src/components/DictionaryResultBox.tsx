@@ -11,9 +11,15 @@ function DictionaryResultBox({ result }: Props) {
 			{result.def.map((definition) => (
 				<div key={definition.pos}>
 					<h5>{definition.pos}</h5>
-					{definition.tr.map((translation) => (
-						<p key={translation.text}>{translation.text}</p>
-					))}
+					<ul className="list-disc">
+						{definition.tr.map((translation) => (
+							<li key={translation.text}>
+								<strong>{translation.text}</strong>
+								{translation.mean?.length > 0 &&
+									` - ${translation.mean.map((meaning) => meaning.text).join(', ')}`}
+							</li>
+						))}
+					</ul>
 				</div>
 			))}
 			<hr />
@@ -24,7 +30,6 @@ function DictionaryResultBox({ result }: Props) {
 				rel="noopener noreferrer"
 				style={{
 					color: 'inherit',
-					textDecoration: 'underline',
 				}}
 			>
 				Yandex.Dictionary

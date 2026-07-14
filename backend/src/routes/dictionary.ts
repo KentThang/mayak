@@ -16,15 +16,11 @@ router.get('/lookup', async (req, res) => {
 	url.searchParams.set('lang', detectLanguage(query))
 	url.searchParams.set('text', query)
 
-	console.log(url)
-
 	const response = await fetch(url)
 
 	if (!response.ok) {
 		throw new Error(`Yandex Dictionary API error: ${response.status}`)
 	}
-
-	console.log(response)
 
 	const data = await response.json()
 

@@ -1,7 +1,10 @@
 import { COMMANDLINE_ANKIWEB, COMMANDLINE_MK } from '../const/commandLineConsts'
 
 export function executeSearch(query: string) {
-	if (COMMANDLINE_MK.includes(query)) {
+	if ( query == '' ) {
+		return
+	}
+	else if (COMMANDLINE_MK.includes(query)) {
 		window.open('https://monkeytype.com/', '_blank')
 		return
 	} else if (COMMANDLINE_ANKIWEB.includes(query)) {
@@ -11,9 +14,19 @@ export function executeSearch(query: string) {
 }
 
 async function lookupDictionary(query: string) {
-	const response = await fetch(
-		`http://localhost:3000/api/dictionary/lookup?q=${encodeURIComponent(query)}`
-	)
+	let response
+	try {
+		response = await fetch(
+			`http://localhost:3000/api/dictionary/lookup?q=${encodeURIComponent(query)}`
+		)
+	} catch (error) {
+		return
+	}
+
+	if (!response.ok) {
+		return null
+	}
+
 	const data = await response.json()
 	console.log(data)
 
