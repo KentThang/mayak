@@ -23,7 +23,6 @@ function App() {
 		async function loadDashboard() {
 			const response = await fetch('http://localhost:3000/api/dashboard')
 			const data = await response.json()
-			console.log(data)
 			setDashboard(data)
 		}
 

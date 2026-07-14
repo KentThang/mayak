@@ -13,7 +13,6 @@ export async function getMonkeytypeResults(
 	afterTimestamp?: bigint
 ): Promise<MonkeytypeResult[]> {
 	const url = new URL('https://api.monkeytype.com/results')
-	url.searchParams.set('limit', '100')
 
 	if (afterTimestamp) {
 		url.searchParams.set('onOrAfterTimestamp', afterTimestamp.toString())

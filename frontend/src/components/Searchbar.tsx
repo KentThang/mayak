@@ -6,7 +6,7 @@ import type { DictionaryResult } from '../types/dictionary'
 
 function Searchbar() {
 	const [result, setResult] = useState<DictionaryResult | null>(null)
-	const [resultMessage, setResultMessage] = useState<string>(null)
+	const [resultMessage, setResultMessage] = useState<string>('')
 	const [show, setShow] = useState(false)
 	const [query, setQuery] = useState('')
 
@@ -18,7 +18,7 @@ function Searchbar() {
 		if (data) {
 			if (data.def.length != 0) {
 				setResult(data)
-				setResultMessage(null)
+				setResultMessage('')
 			} else {
 				setResult(null)
 				setResultMessage("No result found for '" + query + "'")
@@ -35,7 +35,7 @@ function Searchbar() {
 				setShow((prev) => !prev)
 				setQuery('')
 				setResult(null)
-				setResultMessage(null)
+				setResultMessage('')
 			}
 		}
 
@@ -50,7 +50,7 @@ function Searchbar() {
 		setShow(false)
 		setQuery('')
 		setResult(null)
-		setResultMessage(null)
+		setResultMessage('')
 	}
 
 	return (

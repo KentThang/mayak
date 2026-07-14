@@ -35,8 +35,6 @@ router.get('/', async (_, res) => {
 		count,
 	}))
 
-	console.log(heatmap)
-
 	res.json({
 		monkeytype: {
 			testsToday,

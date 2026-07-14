@@ -10,11 +10,18 @@ frontend: typescript, react
 backend: typescript, express, nodejs
 db: sqlite (prisma) https://www.prisma.io/docs/prisma-orm/quickstart/sqlite
 
-create db with
-npx prisma migrate dev --name init
-
 ## Setup
+
 npm install in both /frontend and /backend
+
+### Backend
+
+Run
+npx prisma generate
+npx prisma migrate dev
+npm run dev
+
+## Other
 
 image used:
 https://pixabay.com/photos/lighthouse-ebb-beach-coast-beacon-6915406/

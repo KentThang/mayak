@@ -6,7 +6,12 @@ import {
 import type { MonkeytypeResult } from '../generated/prisma/client.ts'
 
 export async function syncMonkeytype() {
-	const latest = await getLatestMonkeytypeResult()
+	let latest: MonkeytypeResult | null = null
+	try {
+		latest = await getLatestMonkeytypeResult()
+	} catch (error) {
+		// do nothing, DB empty
+	}
 
 	let results: MonkeytypeResult[] = []
 	try {
