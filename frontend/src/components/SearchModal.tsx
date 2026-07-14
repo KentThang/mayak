@@ -4,7 +4,7 @@ import { executeSearch } from '../utils/SearchbarUtils'
 import DictionaryResultBox from './DictionaryResultBox'
 import type { DictionaryResult } from '../types/dictionary'
 
-function Searchbar() {
+function SearchModal() {
 	const [result, setResult] = useState<DictionaryResult | null>(null)
 	const [resultMessage, setResultMessage] = useState<string>('')
 	const [show, setShow] = useState(false)
@@ -89,4 +89,4 @@ function Searchbar() {
 	)
 }
 
-export default Searchbar
+export default SearchModal

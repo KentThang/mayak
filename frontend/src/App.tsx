@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import CalendarHeatmap from 'react-calendar-heatmap'
-import Searchbar from './components/Searchbar'
+import SearchModal from './components/SearchModal'
+import MonkeytypeBox from './components/MonkeytypeBox'
 
 interface DashboardData {
 	monkeytype: {
@@ -34,14 +35,14 @@ function App() {
 			<div className="dashboard min-h-screen flex flex-col pt-5 ps-10 pe-10 relative">
 				<div id="header" className="flex flex-row gap-5">
 					<h1>mayak</h1>
-					<Searchbar />
+					<SearchModal />
 				</div>
 				<div className="pt-1 flex justify-center gap-2">
 					<div
 						id="main-panel"
 						className="main-panel w-7xl px-9 pb-2 pt-2 rounded-4xl backdrop-blur-lg"
 					>
-						<p className="text-3xl pb-2">Activity Calendar</p>
+						<p className="text-3xl pb-2 m-0">Activity Calendar</p>
 						<div className="heatmap rounded-3xl">
 							<CalendarHeatmap
 								startDate={oneYearAgo}
@@ -62,10 +63,9 @@ function App() {
 								}}
 							/>
 						</div>
-						<p className="pt-3">
-							monkeytype tests today:{' '}
-							{dashboard?.monkeytype.testsToday}
-						</p>
+						<MonkeytypeBox
+							testsToday={dashboard?.monkeytype.testsToday}
+						/>
 					</div>
 				</div>
 			</div>

@@ -18,8 +18,7 @@ body {
 }
 
 h1 {
-	color: white;
-	mix-blend-mode: overlay;
+	color: white !important;
 	font-size: 3rem;
 }
 
@@ -29,4 +28,8 @@ h1 {
 
 .dictionary-box p {
 	color: black !important;
+}
+
+p {
+	margin: 0 !important;
 }
