@@ -8,8 +8,9 @@ datasource db {
 }
 
 model MonkeytypeResult {
-  id        String @id
-  timestamp BigInt
-  wpm       Float
-  accuracy  Float
+  id         String @id
+  timestamp  BigInt
+  wpm        Float
+  accuracy   Float
+  characters Float
 }

@@ -3,19 +3,24 @@ import { syncMonkeytype } from '../sync/monkeytypeSync.ts'
 import {
 	getAllStoredMonkeytypeResults,
 	getDailyMonkeytypeResultsCount,
+	getLatestMonkeytypeResult,
+	getRecordMonkeytypeResult,
 } from '../repositories/monkeytypeRepository.ts'
 
 const router = Router()
 
 router.get('/', async (_, res) => {
-	await syncMonkeytype()
+	const latest = await getLatestMonkeytypeResult()
+	if (latest != undefined) await syncMonkeytype(latest.timestamp)
+
+	const bestTest = await getRecordMonkeytypeResult()
 
 	const testsToday = await getDailyMonkeytypeResultsCount()
 
 	// potentially move this logic elsewhere
-	const allTestsFromDB = await getAllStoredMonkeytypeResults()
+	const allMonkeytypeTestsFromDB = await getAllStoredMonkeytypeResults()
 
-	const grouped = allTestsFromDB.reduce<Record<string, number>>(
+	const grouped = allMonkeytypeTestsFromDB.reduce<Record<string, number>>(
 		(acc, result) => {
 			const date = new Date(Number(result.timestamp))
 				.toISOString()
@@ -30,9 +35,10 @@ router.get('/', async (_, res) => {
 		{}
 	)
 
-	const heatmap = Object.entries(grouped).map(([date, count]) => ({
+	const heatmap = Object.entries(grouped).map(([date, monkeytype]) => ({
 		date,
-		count,
+		count: monkeytype,
+		monkeytype,
 	}))
 
 	res.json({
@@ -40,6 +46,16 @@ router.get('/', async (_, res) => {
 			testsToday,
 		},
 		heatmap: heatmap,
+		latest: {
+			wpm: latest?.wpm,
+			characters: latest?.characters,
+			accuracy: latest?.accuracy,
+		},
+		bestTest: {
+			wpm: bestTest?.wpm,
+			characters: bestTest?.characters,
+			accuracy: bestTest?.accuracy,
+		},
 	})
 })
 

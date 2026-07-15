@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import CalendarHeatmap from 'react-calendar-heatmap'
 import SearchModal from './components/SearchModal'
 import MonkeytypeBox from './components/MonkeytypeBox'
+import Heatmap from './components/Heatmap'
 
 interface DashboardData {
 	monkeytype: {
@@ -10,12 +10,19 @@ interface DashboardData {
 	heatmap: {
 		date: string
 		count: number
+		monkeytype: number
 	}[]
+	latest: {
+		wpm: number
+		characters: number
+		accuracy: number
+	}
+	bestTest: {
+		wpm: number
+		characters: number
+		accuracy: number
+	}
 }
-
-const today = new Date()
-const oneYearAgo = new Date()
-oneYearAgo.setFullYear(today.getFullYear() - 1)
 
 function App() {
 	const [dashboard, setDashboard] = useState<DashboardData | null>(null)
@@ -43,28 +50,11 @@ function App() {
 						className="main-panel w-7xl px-9 pb-2 pt-2 rounded-4xl backdrop-blur-lg"
 					>
 						<p className="text-3xl pb-2 m-0">Activity Calendar</p>
-						<div className="heatmap rounded-3xl">
-							<CalendarHeatmap
-								startDate={oneYearAgo}
-								endDate={today}
-								values={dashboard?.heatmap ?? []}
-								classForValue={(value) => {
-									if (!value) {
-										return 'color-empty'
-									} else if (value.count > 0) {
-										return `color-github-1`
-									} else if (value.count > 10) {
-										return `color-github-2`
-									} else if (value.count > 20) {
-										return `color-github-3`
-									} else if (value.count > 30) {
-										return `color-github-4`
-									} else return `color-github-5`
-								}}
-							/>
-						</div>
+						<Heatmap heatmap={dashboard?.heatmap} />
 						<MonkeytypeBox
 							testsToday={dashboard?.monkeytype.testsToday}
+							latest={dashboard?.latest}
+							bestTest={dashboard?.bestTest}
 						/>
 					</div>
 				</div>

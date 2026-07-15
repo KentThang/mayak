@@ -1,28 +1,18 @@
 import { getMonkeytypeResults } from '../services/monkeytype.ts'
-import {
-	getLatestMonkeytypeResult,
-	saveMonkeytypeResults,
-} from '../repositories/monkeytypeRepository.ts'
+import { saveMonkeytypeResults } from '../repositories/monkeytypeRepository.ts'
 import type { MonkeytypeResult } from '../generated/prisma/client.ts'
 
-export async function syncMonkeytype() {
-	let latest: MonkeytypeResult | null = null
-	try {
-		latest = await getLatestMonkeytypeResult()
-	} catch (error) {
-		// do nothing, DB empty
-	}
-
+export async function syncMonkeytype(latestTimestamp: bigint) {
 	let results: MonkeytypeResult[] = []
 	try {
-		results = await getMonkeytypeResults(latest?.timestamp)
+		results = await getMonkeytypeResults(latestTimestamp)
 	} catch (error) {
 		// Abort sync attempt if fetch failed
 		return
 	}
 
-	const newResults = latest
-		? results.filter((r) => r.timestamp > latest.timestamp)
+	const newResults = latestTimestamp
+		? results.filter((r) => r.timestamp > latestTimestamp)
 		: results
 
 	// If there are new results, save them to DB

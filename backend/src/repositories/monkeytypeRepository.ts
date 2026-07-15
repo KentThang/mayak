@@ -45,3 +45,12 @@ export async function getAllStoredMonkeytypeResults() {
 		},
 	})
 }
+
+// Fetches the best (WPM) result from DB
+export async function getRecordMonkeytypeResult() {
+	return prisma.monkeytypeResult.findFirst({
+		orderBy: {
+			wpm: 'desc',
+		},
+	})
+}

@@ -1,8 +1,18 @@
 type MonkeytypeBoxProps = {
 	testsToday?: number
+	latest?: {
+		wpm: number
+		characters: number
+		accuracy: number
+	}
+	bestTest?: {
+		wpm: number
+		characters: number
+		accuracy: number
+	}
 }
 
-function MonkeytypeBox({ testsToday }: MonkeytypeBoxProps) {
+function MonkeytypeBox({ testsToday, bestTest, latest }: MonkeytypeBoxProps) {
 	return (
 		<div className="w-fit mt-3">
 			<p className="text-3xl m-0 pb-2">Monkeytype</p>
@@ -15,15 +25,15 @@ function MonkeytypeBox({ testsToday }: MonkeytypeBoxProps) {
 				</div>
 				<div className="ps-3 pt-1 mt-2">
 					<p>Latest Result</p>
-					<p>WPM: </p>
-					<p>Characters: </p>
-					<p>Accuracy: </p>
+					<p>WPM: {latest?.wpm ?? '-'}</p>
+					<p>Characters: {latest?.characters ?? '-'}</p>
+					<p>Accuracy: {latest?.accuracy ?? '-'}%</p>
 				</div>
 				<div className="ps-3 pt-1 mt-2">
-					<p>Personal Best</p>
-					<p>Record WPM: </p>
-					<p>Record Characters: </p>
-					<p>Latest Test: </p>
+					<p>👑 Personal Best (WPM)</p>
+					<p>WPM: {bestTest?.wpm ?? '-'}</p>
+					<p>Characters: {bestTest?.characters ?? '-'}</p>
+					<p>Accuracy: {bestTest?.accuracy ?? '-'}%</p>
 				</div>
 			</div>
 		</div>
