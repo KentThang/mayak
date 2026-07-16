@@ -16,7 +16,7 @@ oneYearAgo.setFullYear(today.getFullYear() - 1)
 
 function Heatmap({ heatmap }: HeatmapProps) {
 	return (
-		<div className="heatmap rounded-3xl">
+		<div className="heatmap rounded-3xl border p-3">
 			<CalendarHeatmap
 				startDate={oneYearAgo}
 				endDate={today}

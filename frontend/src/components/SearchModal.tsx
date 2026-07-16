@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { executeSearch } from '../utils/SearchbarUtils'
+import { executeSearch } from '../utils/SearchModalUtils'
 import DictionaryResultBox from './DictionaryResultBox'
 import type { DictionaryResult } from '../types/dictionary'
 
@@ -36,6 +36,10 @@ function SearchModal() {
 				setQuery('')
 				setResult(null)
 				setResultMessage('')
+			}
+			// Regex that accepts stringы consisting of only one Unicode letter
+			else if (/^\p{L}$/u.test(e.key)) {
+				setShow(true)
 			}
 		}
 

@@ -19,7 +19,6 @@ body {
 
 h1 {
 	color: white !important;
-	font-size: 3rem;
 }
 
 .main-panel p {
@@ -32,4 +31,14 @@ h1 {
 
 p {
 	margin: 0 !important;
+	color: white;
+}
+
+b {
+	color: white;
+}
+
+.circled-number {
+	font-size: var(--text-6xl); /* 3.75rem (60px) */
+	line-height: var(--text-6xl--line-height); /* 1 */
 }
