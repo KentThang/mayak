@@ -2,12 +2,12 @@ import { getMonkeytypeResults } from '../services/monkeytype.ts'
 import { saveMonkeytypeResults } from '../repositories/monkeytypeRepository.ts'
 import type { MonkeytypeResult } from '../generated/prisma/client.ts'
 
-export async function syncMonkeytype(latestTimestamp: bigint) {
+export async function syncMonkeytype(latestTimestamp: bigint | undefined) {
 	let results: MonkeytypeResult[] = []
 	try {
 		results = await getMonkeytypeResults(latestTimestamp)
 	} catch (error) {
-		// Abort sync attempt if fetch failed
+		console.log('Failed to fetch Monkeytype results ' + error)
 		return
 	}
 

@@ -15,6 +15,18 @@ const oneYearAgo = new Date()
 oneYearAgo.setFullYear(today.getFullYear() - 1)
 
 function Heatmap({ heatmap }: HeatmapProps) {
+	const maxCount = Math.max(...(heatmap ?? []).map((value) => value.count), 0)
+
+	const getColorClass = (count: number) => {
+		if (count === 0 || maxCount === 0) {
+			return 'color-empty'
+		}
+
+		const level = Math.ceil((count / maxCount) * 4)
+
+		return `color-github-${Math.min(level, 4)}`
+	}
+
 	return (
 		<div className="heatmap rounded-3xl border p-3">
 			<CalendarHeatmap
@@ -24,15 +36,9 @@ function Heatmap({ heatmap }: HeatmapProps) {
 				classForValue={(value) => {
 					if (!value) {
 						return 'color-empty'
-					} else if (value.count > 0) {
-						return `color-github-1`
-					} else if (value.count > 10) {
-						return `color-github-2`
-					} else if (value.count > 20) {
-						return `color-github-3`
-					} else if (value.count > 30) {
-						return `color-github-4`
-					} else return `color-github-5`
+					}
+
+					return getColorClass(value.count)
 				}}
 				tooltipDataAttrs={(value) =>
 					({

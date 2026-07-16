@@ -11,7 +11,7 @@ const router = Router()
 
 router.get('/', async (_, res) => {
 	const latest = await getLatestMonkeytypeResult()
-	if (latest != undefined) await syncMonkeytype(latest.timestamp)
+	await syncMonkeytype(latest?.timestamp)
 
 	const bestTest = await getRecordMonkeytypeResult()
 

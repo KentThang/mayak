@@ -5,9 +5,7 @@ export interface MonkeytypeApiResult {
 	timestamp: number
 	wpm: number
 	acc: number
-	charStats: {
-		correct: number
-	}
+	charStats: number[]
 }
 
 const apiKey = process.env.MONKEYTYPE_APEKEY
@@ -37,6 +35,6 @@ export async function getMonkeytypeResults(
 		timestamp: BigInt(result.timestamp),
 		wpm: result.wpm,
 		accuracy: result.acc,
-		characters: result.charStats.correct,
+		characters: result.charStats[0],
 	}))
 }
