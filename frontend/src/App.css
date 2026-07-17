@@ -14,7 +14,11 @@ body {
 	position: relative;
 	width: 100vw;
 	height: 100vh;
+
 	background-image: url('/src/assets/image.jpg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 h1 {
@@ -41,4 +45,8 @@ b {
 .circled-number {
 	font-size: var(--text-6xl); /* 3.75rem (60px) */
 	line-height: var(--text-6xl--line-height); /* 1 */
+}
+
+.nav a {
+	text-decoration: none !important;
 }

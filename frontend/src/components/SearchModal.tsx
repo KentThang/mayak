@@ -37,7 +37,7 @@ function SearchModal() {
 				setResult(null)
 				setResultMessage('')
 			}
-			// Regex that accepts stringы consisting of only one Unicode letter
+			// Regex that accepts string consisting of only one Unicode letter
 			else if (/^\p{L}$/u.test(e.key)) {
 				setShow(true)
 			}
