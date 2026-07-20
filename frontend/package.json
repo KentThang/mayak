@@ -12,6 +12,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.3.2",
     "bootstrap": "^5.3.8",
+    "motion": "^12.42.2",
     "react": "^19.2.7",
     "react-bootstrap": "^2.10.10",
     "react-calendar-heatmap": "^1.10.0",

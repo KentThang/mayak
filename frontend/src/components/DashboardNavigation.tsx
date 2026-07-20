@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import SearchModal from './SearchModal'
 
 function DashboardNavigation() {
 	return (
@@ -41,7 +40,6 @@ function DashboardNavigation() {
 					to open command line
 				</p>
 			</div>
-			<SearchModal />
 		</div>
 	)
 }

@@ -3,17 +3,24 @@ import Modal from 'react-bootstrap/Modal'
 import { executeSearch } from '../utils/SearchModalUtils'
 import DictionaryResultBox from './DictionaryResultBox'
 import type { DictionaryResult } from '../types/dictionary'
+import { useNavigate } from 'react-router-dom'
 
-function SearchModal() {
+interface SearchModalProps {
+	show: boolean
+	onClose: () => void
+}
+
+function SearchModal({ show, onClose }: SearchModalProps) {
 	const [result, setResult] = useState<DictionaryResult | null>(null)
 	const [resultMessage, setResultMessage] = useState<string>('')
-	const [show, setShow] = useState(false)
 	const [query, setQuery] = useState('')
+
+	const navigate = useNavigate()
 
 	const handleSearch = async (e: { preventDefault: () => void }) => {
 		e.preventDefault()
 
-		const data = await executeSearch(query)
+		const data = await executeSearch(query, navigate)
 
 		if (data) {
 			if (data.def.length != 0) {
@@ -30,31 +37,18 @@ function SearchModal() {
 	}
 
 	useEffect(() => {
-		const handleKeyDown = (e: { key: string }) => {
-			if (e.key === 'Escape') {
-				setShow((prev) => !prev)
-				setQuery('')
-				setResult(null)
-				setResultMessage('')
-			}
-			// Regex that accepts string consisting of only one Unicode letter
-			else if (/^\p{L}$/u.test(e.key)) {
-				setShow(true)
-			}
+		if (!show) {
+			setQuery('')
+			setResult(null)
+			setResultMessage('')
 		}
-
-		window.addEventListener('keydown', handleKeyDown)
-
-		return () => {
-			window.removeEventListener('keydown', handleKeyDown)
-		}
-	}, [])
+	}, [show])
 
 	const handleClose = () => {
-		setShow(false)
 		setQuery('')
 		setResult(null)
 		setResultMessage('')
+		onClose()
 	}
 
 	return (
