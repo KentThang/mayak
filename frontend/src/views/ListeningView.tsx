@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button } from 'react-bootstrap'
-import { isValidHttpUrl, lookupTitle } from '../utils/ListeningViewUtils'
+import { isValidHttpUrl } from '../utils/ListeningViewUtils'
 
 interface ListeningViewProps {
 	onOpenCreateModal: (link?: string, title?: string) => void
@@ -12,22 +12,18 @@ function ListeningView({ onOpenCreateModal }: ListeningViewProps) {
 	const handleSubmit = async (e: { preventDefault: () => void }) => {
 		e.preventDefault()
 
-		console.log(input)
-
 		// IDEA: add exercise to DB
 		// i was thinking about a way to do this without a modal but I think its just best to do it with a modal
 		// enter link / title in search input
 		// open modal and sets link to input (can also be title?)
-		if (isValidHttpUrl(input)) onOpenCreateModal(input, undefined)
-		else onOpenCreateModal(undefined, input)
-		// if url: fetch title and set link field in modal to X
-		// lookupTitle(input)
-		// if not: ask for link, it should be optional?
-		// store title, url, timestamp in db
+		if (isValidHttpUrl(input)) {
+			onOpenCreateModal(input, undefined)
+		} else onOpenCreateModal(undefined, input)
+
+		// exercises gets stored in DB from modal
+		// after creating exercise in modal, update list of exercises and open the first one / latest trained one?
 		// fetch title, url, timestamp from db
-		// also store # listens (default 0)
 		// display title, url, timestamp in frontend
-		// open exercise page
 	}
 
 	return (

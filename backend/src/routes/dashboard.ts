@@ -9,6 +9,9 @@ import {
 
 const router = Router()
 
+// Queries DB to get the latest Monkeytype test stored in DB and then uses it to fetch all the Monkeytype results dated after its timestamp.
+// Saves these new Monkeytype results in DB
+// Queries DB for the test with the highest recorded WPM and queries DB for count of Monkeytype tests done today
 router.get('/', async (_, res) => {
 	const latest = await getLatestMonkeytypeResult()
 	await syncMonkeytype(latest?.timestamp)

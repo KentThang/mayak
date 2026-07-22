@@ -6,6 +6,7 @@ export async function lookupTitle(input: string) {
 			`http://localhost:3000/api/listening/lookup?q=${encodeURIComponent(input)}`
 		)
 	} catch (error) {
+		console.log(error)
 		return
 	}
 
@@ -14,6 +15,8 @@ export async function lookupTitle(input: string) {
 	}
 
 	const data = await response.json()
+
+	console.log(data)
 
 	return data
 }
