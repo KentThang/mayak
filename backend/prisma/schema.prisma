@@ -14,3 +14,24 @@ model MonkeytypeResult {
   accuracy   Float
   characters Float
 }
+
+model ListeningExercise {
+  id         String @id @default(cuid())
+
+  title      String
+  url        String?
+  createdAt  DateTime   @default(now())
+  listens    Listen[]
+}
+
+model Listen {
+  id          String @id @default(cuid())
+
+  listenedAt  DateTime   @default(now())
+
+  notesDuring String?
+  notesAfter  String?
+
+  exerciseId  String
+  exercise    ListeningExercise @relation(fields: [exerciseId], references: [id])
+}

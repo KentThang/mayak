@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { Button } from 'react-bootstrap'
 import { lookupTitle } from '../utils/ListeningViewUtils'
+import { createListeningExercise } from '../utils/CreateListeningExerciseModalUtils'
 
 type CreateListeningExerciseModalProps = {
 	show: boolean
@@ -24,8 +25,10 @@ function CreateListeningExerciseModal({
 	const handleSubmit = async (e: { preventDefault: () => void }) => {
 		e.preventDefault()
 
+		createListeningExercise(title, link)
+
 		// store title, url, timestamp in db
-		// also store # listens (default 0)
+		// derive nr of listens from the list array length
 	}
 
 	useEffect(() => {

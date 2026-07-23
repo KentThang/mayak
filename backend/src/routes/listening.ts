@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import * as cheerio from 'cheerio'
+import { createListeningExercise } from '../repositories/listeningExerciseRepository.ts'
 
 const router = Router()
 
@@ -41,6 +42,12 @@ router.get('/lookup', async (req, res) => {
 	res.json(title)
 })
 
-router.get('/save-exercise', async (req, res) => {})
+router.post('/save-exercise', async (req, res) => {
+	const { title, link } = req.body
+
+	const result = await createListeningExercise(title, link)
+
+	res.json()
+})
 
 export default router
