@@ -3,6 +3,8 @@
 		"concurrently": "^10.0.3"
 	},
 	"scripts": {
-		"dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\""
+		"backend": "npm --prefix backend run dev",
+		"frontend": "npm --prefix frontend run dev",
+		"dev": "concurrently --raw \"npm run backend\" \"npm run frontend\""
 	}
 }
