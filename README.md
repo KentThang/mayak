@@ -12,17 +12,12 @@ db: sqlite (prisma) https://www.prisma.io/docs/prisma-orm/quickstart/sqlite
 
 ## Setup
 
-npm install in both /frontend and /backend
+npm install in both `/frontend` and `/backend`.
 
-### Backend
+### Running the program
 
-Run
-npx prisma generate
-npx prisma migrate dev
-npm run dev
-
-To reset DB
-npx prisma migrate reset
+Run mayak by running `npm run dev` in the root folder.
+Alternatively, run `npm run dev` in two separate terminals in both `/frontend` and `/backend`
 
 ## Other
 
