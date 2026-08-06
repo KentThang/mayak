@@ -12,7 +12,10 @@ db: sqlite (prisma) https://www.prisma.io/docs/prisma-orm/quickstart/sqlite
 
 ## Setup
 
-npm install in both `/frontend` and `/backend`.
+1. npm install in both `/frontend` and `/backend`.
+2. (add environment variables to `.env` file in `/backend`)
+3. in `/backend` run `npx prisma generate` to generate the Prisma client.
+4. in `/backend` run `npx prisma migrate dev --name init` to create the database file.
 
 ### Running the program
 
