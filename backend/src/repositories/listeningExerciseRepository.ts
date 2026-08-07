@@ -8,3 +8,7 @@ export async function createListeningExercise(title: string, url: string) {
 		},
 	})
 }
+
+export async function fetchAllListeningExercises() {
+	return prisma.listeningExercise.findMany()
+}

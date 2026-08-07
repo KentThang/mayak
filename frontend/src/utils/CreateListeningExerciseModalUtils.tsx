@@ -8,8 +8,8 @@ export async function createListeningExercise(title: string, link: string) {
 			},
 			body: JSON.stringify({
 				title,
-				link,
-			}),
+				url: link.trim() || null,
+			})
 		}
 	)
 

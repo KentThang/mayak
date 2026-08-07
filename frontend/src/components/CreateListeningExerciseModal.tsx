@@ -11,7 +11,6 @@ type CreateListeningExerciseModalProps = {
 	onClose: () => void
 }
 
-// TODO: implement add listening exercise, frontend
 function CreateListeningExerciseModal({
 	show,
 	initialLink,
@@ -25,10 +24,10 @@ function CreateListeningExerciseModal({
 	const handleSubmit = async (e: { preventDefault: () => void }) => {
 		e.preventDefault()
 
-		createListeningExercise(title, link)
-
-		// store title, url, timestamp in db
-		// derive nr of listens from the list array length
+		if (await createListeningExercise(title, link))
+			onClose()
+		else
+			console.log("Error creating exercise")
 	}
 
 	useEffect(() => {

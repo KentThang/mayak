@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
-import { isValidHttpUrl } from '../utils/ListeningViewUtils'
+import { fetchExercises, isValidHttpUrl } from '../utils/ListeningViewUtils'
+import type { ListeningExercise } from '../types/listeningView'
 
 interface ListeningViewProps {
 	onOpenCreateModal: (link?: string, title?: string) => void
@@ -8,23 +9,34 @@ interface ListeningViewProps {
 
 function ListeningView({ onOpenCreateModal }: ListeningViewProps) {
 	const [input, setInput] = useState('')
+	const [exercises, setExercises] = useState<ListeningExercise[] | null>(null)
+	const [selectedExercise, setSelectedExercise] = useState<ListeningExercise | null>(null)
 
 	const handleSubmit = async (e: { preventDefault: () => void }) => {
 		e.preventDefault()
 
-		// IDEA: add exercise to DB
-		// i was thinking about a way to do this without a modal but I think its just best to do it with a modal
-		// enter link / title in search input
-		// open modal and sets link to input (can also be title?)
 		if (isValidHttpUrl(input)) {
 			onOpenCreateModal(input, undefined)
 		} else onOpenCreateModal(undefined, input)
 
-		// exercises gets stored in DB from modal
 		// after creating exercise in modal, update list of exercises and open the first one / latest trained one?
-		// fetch title, url, timestamp from db
-		// display title, url, timestamp in frontend
+		loadExercises()
 	}
+
+	async function loadExercises() {
+		const data = await fetchExercises()
+		console.log(data)
+		setExercises(data)
+		console.log("Exercises " + exercises)
+	}
+
+	useEffect(() => {
+		loadExercises()
+	}, [])
+
+	useEffect(() => {
+		console.log(selectedExercise)
+	}, [selectedExercise])
 
 	return (
 		<div className="pt-1 flex justify-center gap-2">
@@ -33,10 +45,10 @@ function ListeningView({ onOpenCreateModal }: ListeningViewProps) {
 				className="main-panel w-7xl px-9 pb-2 pt-2 rounded-4xl backdrop-blur-lg"
 			>
 				<p className="text-3xl pb-2 m-0">Listening</p>
-				<div className="flex flex-row">
+				<div className="flex flex-row gap-3">
 					<div
-						id="listening-exercises-list"
-						className="flex flex-col w-25"
+						id="listening-exercises-container"
+						className="flex flex-col grow-1"
 					>
 						<div className="flex flex-row">
 							<form className="w-100" onSubmit={handleSubmit}>
@@ -54,16 +66,36 @@ function ListeningView({ onOpenCreateModal }: ListeningViewProps) {
 								+
 							</Button>
 						</div>
-						<div id="list-container">
+						<div id="exercises-list" className="border rounded-lg p-1"> {/* Set max height so its scrollable */}
 							{/* Loop through list of exercises saved */}
+							{exercises?.map((exercise) => (
+								<div key={exercise.id} className="border rounded-lg cursor-pointer mb-1" onClick={() => { setSelectedExercise(exercise) }}>
+									<p>{exercise.title}</p>
+								</div>
+							))}
 						</div>
 					</div>
-					<div>
-						<h2>Title</h2>
-						<p>Listens: X</p>
-						<div id="past-listens-list" className="">
-							{/* Loop through list of listens saved */}
-						</div>
+					<div id="selected-exercise-container" className="selected-exercise-container border rounded-lg grow-2">
+						{selectedExercise === null ? (
+							<h3>Exercise not selected</h3>
+						) :
+							(
+								<div>
+									{selectedExercise.url === null ? (
+										<h3>{selectedExercise?.title}</h3>
+									) :
+										(
+											<a href={selectedExercise.url}>
+												<h3>{selectedExercise?.title}</h3>
+											</a>
+										)}
+									<p>Listens: {selectedExercise?.listens?.length ?? 0}</p>
+									<div id="past-listens-list" className="">
+										{/* Loop through list of listens saved */}
+									</div>
+								</div>
+							)
+						}
 					</div>
 				</div>
 			</div>

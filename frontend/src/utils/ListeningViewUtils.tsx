@@ -29,3 +29,23 @@ export function isValidHttpUrl(input: string) {
 	}
 	return url.protocol === 'http:' || url.protocol === 'https:'
 }
+
+export async function fetchExercises() {
+	let response
+	try {
+		response = await fetch(
+			`http://localhost:3000/api/listening/get-all-listening-exercises`
+		)
+	} catch (error) {
+		console.log(error)
+		return
+	}
+
+	if (!response.ok) {
+		return null
+	}
+
+	const data = await response.json()
+
+	return data
+}

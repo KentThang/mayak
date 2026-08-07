@@ -43,10 +43,16 @@ b {
 }
 
 .circled-number {
-	font-size: var(--text-6xl); /* 3.75rem (60px) */
-	line-height: var(--text-6xl--line-height); /* 1 */
+	font-size: var(--text-6xl);
+	/* 3.75rem (60px) */
+	line-height: var(--text-6xl--line-height);
+	/* 1 */
 }
 
 .nav a {
 	text-decoration: none !important;
+}
+
+.selected-exercise-container {
+	color: white;
 }

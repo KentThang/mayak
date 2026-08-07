@@ -22,6 +22,7 @@ function App() {
 		setActiveModal('create-listening')
 	}
 
+	// the fetching of the dashboard data should probably be moved to be under the activity view
 	useEffect(() => {
 		async function loadDashboard() {
 			const response = await fetch('http://localhost:3000/api/dashboard')
