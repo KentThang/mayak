@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
-import { fetchExercises, isValidHttpUrl } from '../utils/ListeningViewUtils'
-import type { ListeningExercise } from '../types/listeningView'
+import { fetchExercises, fetchPastListens, isValidHttpUrl } from '../utils/ListeningViewUtils'
+import type { Listen, ListeningExercise } from '../types/listeningView'
 
 interface ListeningViewProps {
 	onOpenCreateModal: (link?: string, title?: string) => void
@@ -11,6 +11,7 @@ function ListeningView({ onOpenCreateModal }: ListeningViewProps) {
 	const [input, setInput] = useState('')
 	const [exercises, setExercises] = useState<ListeningExercise[] | null>(null)
 	const [selectedExercise, setSelectedExercise] = useState<ListeningExercise | null>(null)
+	const [pastListens, setPastListens] = useState<Listen[] | null>(null)
 
 	const handleSubmit = async (e: { preventDefault: () => void }) => {
 		e.preventDefault()
@@ -19,15 +20,18 @@ function ListeningView({ onOpenCreateModal }: ListeningViewProps) {
 			onOpenCreateModal(input, undefined)
 		} else onOpenCreateModal(undefined, input)
 
-		// after creating exercise in modal, update list of exercises and open the first one / latest trained one?
-		loadExercises()
+		// TODO: after creating exercise in modal, update list of exercises and open the first one / latest trained one?
 	}
 
 	async function loadExercises() {
 		const data = await fetchExercises()
-		console.log(data)
 		setExercises(data)
-		console.log("Exercises " + exercises)
+	}
+
+	async function loadPastListens(exerciseId: string) {
+		const data = await fetchPastListens(exerciseId)
+		if (data && selectedExercise)
+			setPastListens(data)
 	}
 
 	useEffect(() => {
@@ -35,7 +39,9 @@ function ListeningView({ onOpenCreateModal }: ListeningViewProps) {
 	}, [])
 
 	useEffect(() => {
-		console.log(selectedExercise)
+		if (selectedExercise) {
+			loadPastListens(selectedExercise.id)
+		}
 	}, [selectedExercise])
 
 	return (
@@ -48,7 +54,7 @@ function ListeningView({ onOpenCreateModal }: ListeningViewProps) {
 				<div className="flex flex-row gap-3">
 					<div
 						id="listening-exercises-container"
-						className="flex flex-col grow-1"
+						className="flex flex-col basis-1/3 min-w-0"
 					>
 						<div className="flex flex-row">
 							<form className="w-100" onSubmit={handleSubmit}>
@@ -66,7 +72,7 @@ function ListeningView({ onOpenCreateModal }: ListeningViewProps) {
 								+
 							</Button>
 						</div>
-						<div id="exercises-list" className="border rounded-lg p-1"> {/* Set max height so its scrollable */}
+						<div id="exercises-list" className="border rounded-lg p-1 mt-1 max-h-96 overflow-y-auto">
 							{/* Loop through list of exercises saved */}
 							{exercises?.map((exercise) => (
 								<div key={exercise.id} className="border rounded-lg cursor-pointer mb-1" onClick={() => { setSelectedExercise(exercise) }}>
@@ -75,12 +81,12 @@ function ListeningView({ onOpenCreateModal }: ListeningViewProps) {
 							))}
 						</div>
 					</div>
-					<div id="selected-exercise-container" className="selected-exercise-container border rounded-lg grow-2">
+					<div id="selected-exercise-container" className="selected-exercise-container border rounded-lg basis-2/3 min-w-0">
 						{selectedExercise === null ? (
 							<h3>Exercise not selected</h3>
 						) :
 							(
-								<div>
+								<div className="w-fit ps-2">
 									{selectedExercise.url === null ? (
 										<h3>{selectedExercise?.title}</h3>
 									) :
@@ -89,9 +95,14 @@ function ListeningView({ onOpenCreateModal }: ListeningViewProps) {
 												<h3>{selectedExercise?.title}</h3>
 											</a>
 										)}
-									<p>Listens: {selectedExercise?.listens?.length ?? 0}</p>
+									<p>Listens: {pastListens?.length ?? 0}</p>
 									<div id="past-listens-list" className="">
 										{/* Loop through list of listens saved */}
+										{pastListens?.map((listen) => (
+											<div key={listen.id} className="border rounded p-1 mb-1">
+												<p>{listen.notesDuring}</p>
+											</div>
+										))}
 									</div>
 								</div>
 							)

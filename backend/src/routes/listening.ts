@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import * as cheerio from 'cheerio'
 import { createListeningExercise, fetchAllListeningExercises } from '../repositories/listeningExerciseRepository.ts'
+import { fetchAllPastListensWithExerciseId } from '../repositories/pastListenRepository.ts'
 
 const router = Router()
 
@@ -42,6 +43,7 @@ router.get('/lookup', async (req, res) => {
 	res.json(title)
 })
 
+// TODO: add try catch
 router.post('/save-exercise', async (req, res) => {
 	const { title, link } = req.body
 
@@ -50,10 +52,28 @@ router.post('/save-exercise', async (req, res) => {
 	res.json({ success: true })
 })
 
+// TODO: add try catch
 router.get('/get-all-listening-exercises', async (req, res) => {
 	const allListeningExercises = await fetchAllListeningExercises()
 
 	res.json(allListeningExercises)
+})
+
+router.get('/get-past-listens', async (req, res) => {
+	const exerciseId = req.query.exerciseId as string
+
+	if (!exerciseId) {
+		return res.status(400).json({ error: "Missing query parameter 'exerciseId'" })
+	}
+
+	try {
+		const allPastListensForExercise = await fetchAllPastListensWithExerciseId(exerciseId)
+		res.json(allPastListensForExercise)
+	} catch (error) {
+		console.error(error)
+		res.status(500).json({ error: 'Failed to fetch past listens' })
+	}
+
 })
 
 export default router

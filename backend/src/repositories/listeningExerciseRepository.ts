@@ -10,5 +10,12 @@ export async function createListeningExercise(title: string, url: string) {
 }
 
 export async function fetchAllListeningExercises() {
-	return prisma.listeningExercise.findMany()
+	return prisma.listeningExercise.findMany({
+		select: {
+			id: true,
+			title: true,
+			url: true,
+			createdAt: true,
+		},
+	})
 }

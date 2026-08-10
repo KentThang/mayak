@@ -49,3 +49,23 @@ export async function fetchExercises() {
 
 	return data
 }
+
+export async function fetchPastListens(exerciseId: string) {
+	let response
+	try {
+		response = await fetch(
+			`http://localhost:3000/api/listening/get-past-listens?exerciseId=${encodeURIComponent(exerciseId)}`
+		)
+	} catch (error) {
+		console.log(error)
+		return
+	}
+
+	if (!response.ok) {
+		return null
+	}
+
+	const data = await response.json()
+
+	return data
+}

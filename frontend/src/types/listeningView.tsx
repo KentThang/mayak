@@ -3,10 +3,10 @@ export interface ListeningExercise {
 	title: string
 	url: string | null
 	createdAt: string
-	listens: Listen[]
 }
 
 export interface Listen {
+	id: string
 	listenedAt: string
 	notesDuring: string
 	notesAfter: string
