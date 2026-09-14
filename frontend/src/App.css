@@ -56,3 +56,19 @@ b {
 .selected-exercise-container {
 	color: white;
 }
+
+.clickable-rounded {
+	cursor: pointer;
+	border-radius: calc(infinity * 1px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.hoverable-anim {
+	transition: background-color 0.3s ease;
+}
+
+.hoverable-anim:hover {
+	background-color: rgb(255, 149, 83);
+}

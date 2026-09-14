@@ -1,3 +1,4 @@
+import ActivityBox from '../components/ActivityBox'
 import AnkiBox from '../components/AnkiBox'
 import Heatmap from '../components/Heatmap'
 import MonkeytypeBox from '../components/MonkeytypeBox'
@@ -24,6 +25,7 @@ function ActivityView({ dashboard }: ActivityViewProps) {
 					/>
 					<AnkiBox />
 				</div>
+				<ActivityBox />
 			</div>
 		</div>
 	)
