@@ -1,14 +1,19 @@
+import { useState } from 'react'
 import ActivityBox from '../components/ActivityBox'
 import AnkiBox from '../components/AnkiBox'
 import Heatmap from '../components/Heatmap'
 import MonkeytypeBox from '../components/MonkeytypeBox'
 import type { DashboardData } from '../types/dashboard'
+import ActivityToast from '../components/ActivityToast'
 
 type ActivityViewProps = {
 	dashboard: DashboardData | null
 }
 
 function ActivityView({ dashboard }: ActivityViewProps) {
+	const [toastOpen, setToastOpen] = useState(false)
+	const [toastMessage, setToastMessage] = useState('')
+
 	return (
 		<div className="pt-1 flex justify-center gap-2">
 			<div
@@ -25,8 +30,9 @@ function ActivityView({ dashboard }: ActivityViewProps) {
 					/>
 					<AnkiBox />
 				</div>
-				<ActivityBox />
+				<ActivityBox setToastOpen={setToastOpen} setToastMessage={setToastMessage}/>
 			</div>
+			<ActivityToast open={toastOpen} setOpen={setToastOpen} message={toastMessage}/>
 		</div>
 	)
 }

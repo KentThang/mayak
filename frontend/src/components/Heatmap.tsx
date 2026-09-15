@@ -1,5 +1,5 @@
 import { Tooltip } from 'react-tooltip'
-import '../Heatmap.css'
+import '../styling/Heatmap.css'
 import CalendarHeatmap from 'react-calendar-heatmap'
 
 type HeatmapProps = {

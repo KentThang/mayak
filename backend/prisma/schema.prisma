@@ -34,3 +34,12 @@ model Listen {
   exerciseId  String
   exercise    ListeningExercise @relation(fields: [exerciseId], references: [id])
 }
+
+model Activity {
+  id            String @id @default(cuid())
+  created       DateTime   @default(now())
+
+  activityTitle String
+  secondsSpent  Int
+  description   String?
+}
